@@ -27,6 +27,9 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Video> videos;
 
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
+
     public Category() {}
 
     public int getCategoryid() { return categoryid; }
@@ -43,4 +46,7 @@ public class Category implements Serializable {
 
     public List<Video> getVideos() { return videos; }
     public void setVideos(List<Video> videos) { this.videos = videos; }
+
+    public List<Product> getProducts() { return products; }
+    public void setProducts(List<Product> products) { this.products = products; }
 }

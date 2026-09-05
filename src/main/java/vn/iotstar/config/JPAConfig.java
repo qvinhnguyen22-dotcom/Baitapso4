@@ -6,7 +6,7 @@ import jakarta.persistence.Persistence;
 
 public class JPAConfig {
     public static EntityManager getEntityManager() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("jpa-hibernate-mysql");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("jpa-crud");
         return factory.createEntityManager();
     }
 }
