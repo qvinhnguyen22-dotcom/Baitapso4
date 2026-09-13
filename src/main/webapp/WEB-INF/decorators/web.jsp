@@ -83,11 +83,23 @@
                                                 <i class="fa-solid fa-box-archive me-2 text-info"></i>Quản lý Sản phẩm
                                             </a>
                                         </li>
+                                        <c:if test="${sessionScope.currentUser.admin}">
+                                        <li>
+                                            <a class="dropdown-item py-2" href="<c:url value='/admin'/>">
+                                                <i class="fa-solid fa-gauge-high me-2 text-warning"></i>Trang quản trị
+                                            </a>
+                                        </li>
                                         <li>
                                             <a class="dropdown-item py-2" href="<c:url value='/admin/categories'/>">
                                                 <i class="fa-solid fa-layer-group me-2 text-success"></i>Quản lý Danh mục
                                             </a>
                                         </li>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="<c:url value='/admin/users'/>">
+                                                <i class="fa-solid fa-users me-2 text-primary"></i>Quản lý Người dùng
+                                            </a>
+                                        </li>
+                                        </c:if>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
                                             <a class="dropdown-item py-2 text-danger" href="<c:url value='/logout'/>">
@@ -121,7 +133,7 @@
     <footer class="py-4 mt-5 border-top bg-white">
         <div class="container text-center text-secondary small">
             <div class="fw-semibold text-dark mb-1">© 2026 QuangVinh Store · Hệ thống bán lẻ công nghệ hàng đầu</div>
-            <div>Bài tập 03 - Lập trình Web với Jakarta Servlet 6.0, JPA Hibernate & SiteMesh 3 Decorator</div>
+            <div>Spring Boot 4 · JSP/JSTL · Spring Data JPA · SiteMesh 3 Decorator</div>
         </div>
     </footer>
 

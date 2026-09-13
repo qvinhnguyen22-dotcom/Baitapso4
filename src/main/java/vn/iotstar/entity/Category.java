@@ -2,12 +2,21 @@ package vn.iotstar.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "categories")
 @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
 public class Category implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -24,29 +33,60 @@ public class Category implements Serializable {
     @Column(name = "Status")
     private int status;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category")
     private List<Video> videos;
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
-    public Category() {}
+    public Category() {
+    }
 
-    public int getCategoryid() { return categoryid; }
-    public void setCategoryid(int categoryid) { this.categoryid = categoryid; }
+    public int getCategoryid() {
+        return categoryid;
+    }
 
-    public String getCategoryname() { return categoryname; }
-    public void setCategoryname(String categoryname) { this.categoryname = categoryname; }
+    public void setCategoryid(int categoryid) {
+        this.categoryid = categoryid;
+    }
 
-    public String getImages() { return images; }
-    public void setImages(String images) { this.images = images; }
+    public String getCategoryname() {
+        return categoryname;
+    }
 
-    public int getStatus() { return status; }
-    public void setStatus(int status) { this.status = status; }
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
+    }
 
-    public List<Video> getVideos() { return videos; }
-    public void setVideos(List<Video> videos) { this.videos = videos; }
+    public String getImages() {
+        return images;
+    }
 
-    public List<Product> getProducts() { return products; }
-    public void setProducts(List<Product> products) { this.products = products; }
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }

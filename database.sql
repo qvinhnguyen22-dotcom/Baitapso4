@@ -59,7 +59,8 @@ CREATE TABLE dbo.users (
     avatar NVARCHAR(500) NULL,
     images NVARCHAR(500) NULL,
     status BIT NOT NULL DEFAULT 0, -- 0: Chưa kích hoạt, 1: Đã kích hoạt OTP
-    code NVARCHAR(10) NULL         -- Mã OTP kích hoạt hoặc quên mật khẩu
+    code NVARCHAR(10) NULL,        -- Mã OTP kích hoạt hoặc quên mật khẩu
+    user_role NVARCHAR(20) NOT NULL DEFAULT 'USER' -- ADMIN | USER
 );
 GO
 
@@ -113,10 +114,10 @@ GO
 -- 7.3. Chèn Người dùng mẫu
 -- Mật khẩu mặc định: 123456
 SET IDENTITY_INSERT dbo.users ON;
-INSERT INTO dbo.users (id, fullname, email, username, password, phone, avatar, images, status, code) VALUES
-(1, N'Nguyễn Quang Vinh (Admin)', N'admin@quangvinh.vn', N'admin', N'123456', N'0912345678', NULL, NULL, 1, NULL),
-(2, N'Nguyễn Văn A (User)', N'user@quangvinh.vn', N'user01', N'123456', N'0987654321', NULL, NULL, 1, NULL),
-(3, N'Trần Thị B (Chưa kích hoạt)', N'pending@quangvinh.vn', N'pending01', N'123456', N'0901234567', NULL, NULL, 0, N'654321');
+INSERT INTO dbo.users (id, fullname, email, username, password, phone, avatar, images, status, code, user_role) VALUES
+(1, N'Nguyễn Quang Vinh (Admin)', N'admin@quangvinh.vn', N'admin', N'123456', N'0912345678', NULL, NULL, 1, NULL, N'ADMIN'),
+(2, N'Nguyễn Văn A (User)', N'user@quangvinh.vn', N'user01', N'123456', N'0987654321', NULL, NULL, 1, NULL, N'USER'),
+(3, N'Trần Thị B (Chưa kích hoạt)', N'pending@quangvinh.vn', N'pending01', N'123456', N'0901234567', NULL, NULL, 0, N'654321', N'USER');
 SET IDENTITY_INSERT dbo.users OFF;
 GO
 

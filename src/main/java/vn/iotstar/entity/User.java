@@ -1,7 +1,13 @@
 package vn.iotstar.entity;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -39,7 +45,14 @@ public class User implements Serializable {
     @Column(length = 255)
     private String avatar;
 
+    @Column(name = "user_role", length = 20)
+    private String role = "USER";
+
     public User() {
+    }
+
+    public boolean isAdmin() {
+        return "ADMIN".equalsIgnoreCase(role);
     }
 
     public int getId() {
@@ -120,5 +133,13 @@ public class User implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
