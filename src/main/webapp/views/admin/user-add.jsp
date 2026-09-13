@@ -3,64 +3,150 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Thêm người dùng | Admin</title>
+    <title>Thêm Người Dùng Mới | Admin Portal</title>
 </head>
 <body>
+<!-- Breadcrumb & Header -->
+<div class="mb-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-1 small text-secondary">
+            <li class="breadcrumb-item"><a href="<c:url value='/admin'/>" class="text-decoration-none">Admin</a></li>
+            <li class="breadcrumb-item"><a href="<c:url value='/admin/users'/>" class="text-decoration-none">Người dùng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+        </ol>
+    </nav>
+    <h2 class="h4 fw-bold mb-0 text-dark">
+        <i class="fa-solid fa-user-plus text-primary me-2"></i>Thêm Người Dùng Mới
+    </h2>
+</div>
+
 <div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="admin-card p-4">
-            <h2 class="h4 mb-4">Thêm người dùng</h2>
-            <c:if test="${not empty error}"><div class="alert alert-danger">${error}</div></c:if>
+    <div class="col-lg-9">
+        <div class="admin-card p-4 p-md-5">
+            <c:if test="${not empty error}">
+                <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>${error}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </c:if>
+
             <form action="<c:url value='/admin/user/insert'/>" method="post" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label class="form-label">Họ tên</label>
-                    <input type="text" name="fullname" class="form-control" value="${user.fullname}" required>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Họ và tên <span class="text-danger">*</span></label>
+                        <input type="text" name="fullname" class="form-control" value="${user.fullname}" 
+                               placeholder="Nguyễn Văn A" minlength="2" maxlength="200" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Tên đăng nhập (Username) <span class="text-danger">*</span></label>
+                        <input type="text" name="username" class="form-control" value="${user.username}" 
+                               placeholder="username123" minlength="3" maxlength="50" pattern="^[A-Za-z0-9_]{3,50}$" required>
+                        <div class="form-text">Từ 3-50 ký tự, gồm chữ cái, số và dấu gạch dưới.</div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" value="${user.email}" required>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Địa chỉ Email <span class="text-danger">*</span></label>
+                        <input type="email" name="email" class="form-control" value="${user.email}" 
+                               placeholder="email@example.com" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Mật khẩu khởi tạo <span class="text-danger">*</span></label>
+                        <input type="password" name="password" class="form-control" minlength="6" 
+                               placeholder="Tối thiểu 6 ký tự" required>
+                    </div>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Username</label>
-                    <input type="text" name="username" class="form-control" value="${user.username}" required>
+                    <label class="form-label fw-semibold">Số điện thoại</label>
+                    <input type="tel" name="phone" class="form-control" value="${user.phone}" 
+                           placeholder="0912345678" pattern="[0-9]{10,11}">
+                    <div class="form-text">Gồm 10 hoặc 11 chữ số.</div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Mật khẩu</label>
-                    <input type="password" name="password" class="form-control" minlength="6" required>
+
+                <!-- Avatar Selection -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-7">
+                        <label class="form-label fw-semibold">Link ảnh đại diện (URL)</label>
+                        <input type="url" name="images" id="avatarUrlInput" class="form-control" 
+                               placeholder="https://images.unsplash.com/photo-...">
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label fw-semibold">Hoặc Tải ảnh lên</label>
+                        <input type="file" name="images1" id="avatarFileInput" class="form-control" accept=".jpg,.jpeg,.png,.gif,image/*">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Số điện thoại</label>
-                    <input type="text" name="phone" class="form-control" value="${user.phone}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Link ảnh</label>
-                    <input type="url" name="images" class="form-control" placeholder="https://example.com/avatar.jpg">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Upload ảnh</label>
-                    <input type="file" name="images1" class="form-control" accept=".jpg,.jpeg,.png,.gif">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Vai trò</label>
-                    <select name="role" class="form-select">
-                        <option value="USER" ${user.role == 'USER' ? 'selected' : ''}>USER</option>
-                        <option value="ADMIN" ${user.role == 'ADMIN' ? 'selected' : ''}>ADMIN</option>
-                    </select>
-                </div>
+
+                <!-- Avatar Preview Box -->
                 <div class="mb-4">
-                    <label class="form-label">Trạng thái</label>
-                    <select name="status" class="form-select">
-                        <option value="true" ${user.status ? 'selected' : ''}>Đã kích hoạt</option>
-                        <option value="false" ${!user.status ? 'selected' : ''}>Chưa kích hoạt</option>
-                    </select>
+                    <label class="form-label fw-semibold text-secondary small">XEM TRƯỚC ẢNH ĐẠI DIỆN</label>
+                    <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 border">
+                        <img id="avatarPreview" src="https://placehold.co/100x100?text=Avatar" alt="Avatar" 
+                             class="rounded-circle shadow-sm border" style="width: 80px; height: 80px; object-fit: cover;">
+                        <div class="small text-secondary">
+                            <div><i class="fa-solid fa-circle-info me-1"></i>Ảnh đại diện sẽ hiển thị trên hệ thống và navbar.</div>
+                            <div class="text-muted">Ưu tiên file tải lên nếu cung cấp cả hai.</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">Lưu</button>
-                    <a href="<c:url value='/admin/users'/>" class="btn btn-secondary">Quay lại</a>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Vai trò (Role)</label>
+                        <select name="role" class="form-select">
+                            <option value="USER" ${user.role == 'USER' ? 'selected' : ''}>Người dùng (USER)</option>
+                            <option value="ADMIN" ${user.role == 'ADMIN' ? 'selected' : ''}>Quản trị viên (ADMIN)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Trạng thái kích hoạt</label>
+                        <select name="status" class="form-select">
+                            <option value="true" ${user.status ? 'selected' : ''}>Đã kích hoạt (Hoạt động ngay)</option>
+                            <option value="false" ${!user.status ? 'selected' : ''}>Chưa kích hoạt</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 pt-3 border-top">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="fa-solid fa-user-check me-1.5"></i>Lưu người dùng
+                    </button>
+                    <a href="<c:url value='/admin/users'/>" class="btn btn-outline-secondary px-4">
+                        <i class="fa-solid fa-xmark me-1.5"></i>Hủy bỏ
+                    </a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    const urlInput = document.getElementById('avatarUrlInput');
+    const fileInput = document.getElementById('avatarFileInput');
+    const preview = document.getElementById('avatarPreview');
+
+    urlInput.addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+            preview.src = this.value.trim();
+        } else {
+            preview.src = 'https://placehold.co/100x100?text=Avatar';
+        }
+    });
+
+    fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    preview.onerror = function() {
+        this.src = 'https://placehold.co/100x100?text=Lỗi+ảnh';
+    };
+</script>
 </body>
 </html>

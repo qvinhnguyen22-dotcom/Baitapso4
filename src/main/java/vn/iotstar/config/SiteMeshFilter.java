@@ -7,7 +7,9 @@ public class SiteMeshFilter extends ConfigurableSiteMeshFilter {
 
     @Override
     protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
-        builder.addDecoratorPath("/admin/*", "/WEB-INF/decorators/admin.jsp")
+        builder.addDecoratorPath("/admin", "/WEB-INF/decorators/admin.jsp")
+                .addDecoratorPath("/admin/*", "/WEB-INF/decorators/admin.jsp")
+                .addDecoratorPath("/admin/**", "/WEB-INF/decorators/admin.jsp")
                 .addDecoratorPath("/*", "/WEB-INF/decorators/web.jsp")
                 .addExcludedPath("/assets/*")
                 .addExcludedPath("/image")

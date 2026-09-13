@@ -47,7 +47,8 @@ public class FileStorageService {
         if (url == null || url.isBlank()) {
             return true;
         }
-        return url.matches("(?i)^(https?://).+\\.(jpg|jpeg|png|gif)(\\?.*)?$");
+        String trimmed = url.trim();
+        return trimmed.startsWith("http://") || trimmed.startsWith("https://");
     }
 
     private String extension(String fileName) {
