@@ -18,8 +18,9 @@ public class CategoryDao implements ICategoryDao {
             enma.persist(category);
             trans.commit();
         } catch (Exception e) {
-            e.printStackTrace();
-            trans.rollback();
+            if (trans.isActive()) {
+                trans.rollback();
+            }
             throw e;
         } finally {
             enma.close();
@@ -35,8 +36,9 @@ public class CategoryDao implements ICategoryDao {
             enma.merge(category);
             trans.commit();
         } catch (Exception e) {
-            e.printStackTrace();
-            trans.rollback();
+            if (trans.isActive()) {
+                trans.rollback();
+            }
             throw e;
         } finally {
             enma.close();
@@ -51,14 +53,19 @@ public class CategoryDao implements ICategoryDao {
             trans.begin();
             Category category = enma.find(Category.class, cateid);
             if (category != null) {
+                enma.createQuery(
+                        "UPDATE Product p SET p.category = null WHERE p.category.categoryid = :id")
+                        .setParameter("id", cateid)
+                        .executeUpdate();
                 enma.remove(category);
             } else {
                 throw new Exception("Không tìm thấy danh mục để xóa!");
             }
             trans.commit();
         } catch (Exception e) {
-            e.printStackTrace();
-            trans.rollback();
+            if (trans.isActive()) {
+                trans.rollback();
+            }
             throw e;
         } finally {
             enma.close();
@@ -68,14 +75,22 @@ public class CategoryDao implements ICategoryDao {
     @Override
     public Category findById(int cateid) {
         EntityManager enma = JPAConfig.getEntityManager();
-        return enma.find(Category.class, cateid);
+        try {
+            return enma.find(Category.class, cateid);
+        } finally {
+            enma.close();
+        }
     }
 
     @Override
     public List<Category> findAll() {
         EntityManager enma = JPAConfig.getEntityManager();
-        TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
-        return query.getResultList();
+        try {
+            TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
+            return query.getResultList();
+        } finally {
+            enma.close();
+        }
     }
 
     @Override

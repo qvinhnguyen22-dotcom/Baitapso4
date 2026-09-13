@@ -1,15 +1,96 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page language="java"
+         contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c"
+           uri="jakarta.tags.core"%>
+
 <!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>Quên mật khẩu</title></head>
+
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Quên mật khẩu</title>
+
+</head>
+
 <body>
-    <h2>Quên mật khẩu</h2>
-    <c:if test="${not empty error}"><p style="color:red">${error}</p></c:if>
-    <form action="<c:url value='/forgot-password'/>" method="post">
-        <label>Email: <input type="email" name="email" required></label>
-        <button type="submit">Gửi OTP</button>
-    </form>
-    <a href="<c:url value='/login'/>">Quay lại đăng nhập</a>
+
+<div class="row justify-content-center">
+
+    <div class="col-md-5">
+
+        <div class="card">
+
+            <div class="card-body p-4">
+
+                <h2 class="text-center mb-3">
+                    Quên mật khẩu
+                </h2>
+
+                <p class="text-muted text-center">
+                    Nhập email để nhận mã OTP.
+                </p>
+
+                <c:if test="${not empty error}">
+
+                    <div class="alert alert-danger">
+                        ${error}
+                    </div>
+
+                </c:if>
+
+                <form
+                    action="<c:url value='/forgot-password'/>"
+                    method="post">
+
+                    <div class="mb-3">
+
+                        <label
+                            for="email"
+                            class="form-label">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            maxlength="100"
+                            required>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100">
+
+                        Gửi OTP
+
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-3">
+
+                    <a href="<c:url value='/login'/>">
+                        Quay lại đăng nhập
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 </body>
+
 </html>

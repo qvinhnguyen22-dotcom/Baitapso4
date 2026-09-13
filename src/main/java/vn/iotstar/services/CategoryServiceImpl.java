@@ -7,7 +7,7 @@ import vn.iotstar.entity.Category;
 
 public class CategoryServiceImpl implements ICategoryService {
 
-    private ICategoryDao cateDao = new CategoryDao();
+    private final ICategoryDao cateDao = new CategoryDao();
 
     @Override
     public void insert(Category category) {
@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements ICategoryService {
         try {
             cateDao.delete(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Xóa danh mục thất bại: " + e.getMessage(), e);
         }
     }
 

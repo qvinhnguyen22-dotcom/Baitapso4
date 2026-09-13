@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <mapping path="/*" decorator="/web.jsp" />
+
+    <mapping path="/login" excluded="true" />
+    <mapping path="/register" excluded="true" />
+    <mapping path="/verify-otp" excluded="true" />
+    <mapping path="/forgot-password" excluded="true" />
+    <mapping path="/reset-password" excluded="true" />
+    <mapping path="/admin/*" excluded="true" />
+    <mapping path="/assets/*" excluded="true" />
+    <mapping path="/image" excluded="true" />
+</sitemesh>

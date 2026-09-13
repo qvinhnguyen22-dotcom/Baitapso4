@@ -1,44 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Danh Sách Danh Mục</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-    </style>
-</head>
-<body>
-    <h2>Quản Lý Danh Mục</h2>
-    <a href="<c:url value='/admin/category/add'/>">Thêm danh mục mới</a>
-    <br/><br/>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Tên Danh Mục</th>
-            <th>Hình Ảnh</th>
-            <th>Trạng Thái</th>
-            <th>Thao Tác</th>
-        </tr>
-        <c:forEach items="${listcate}" var="cate">
-            <tr>
-                <td>${cate.categoryid}</td>
-                <td>${cate.categoryname}</td>
-                <td>
-                    <c:if test="${cate.images != null}">
-                        <img src="<c:url value='/image?fname=${cate.images}'/>" width="80" height="80"/>
-                    </c:if>
-                </td>
-                <td>${cate.status == 1 ? "Hoạt động" : "Khóa"}</td>
-                <td>
-                    <a href="<c:url value='/admin/category/edit?id=${cate.categoryid}'/>">Sửa</a> | 
-                    <a href="<c:url value='/admin/category/delete?id=${cate.categoryid}'/>" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-</body>
-</html>
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Quản lý danh mục | Admin</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"><link href="<c:url value='/assets/css/app.css'/>" rel="stylesheet"></head>
+<body><nav class="navbar navbar-dark bg-dark"><div class="container-fluid px-lg-4"><a class="navbar-brand fw-bold" href="<c:url value='/home'/>"><i class="fa-solid fa-gauge-high me-2"></i>QuangVinh ADMIN</a><div class="d-flex gap-2"><a class="btn btn-outline-light btn-sm" href="<c:url value='/admin/products'/>"><i class="fa-solid fa-box me-1"></i>Sản phẩm</a><a class="btn btn-outline-light btn-sm" href="<c:url value='/home'/>">Cửa hàng</a></div></div></nav><main class="container-fluid px-lg-4 py-4"><div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4"><div><p class="text-primary fw-semibold mb-1">QUẢN TRỊ</p><h1 class="h2 fw-bold mb-0">Quản lý danh mục</h1></div><a class="btn btn-brand" href="<c:url value='/admin/category/add'/>"><i class="fa-solid fa-plus me-2"></i>Thêm danh mục</a></div><c:if test="${param.error == 'delete-failed'}"><div class="alert alert-warning"><i class="fa-solid fa-triangle-exclamation me-2"></i>Không thể xóa danh mục này. Vui lòng thử lại sau.</div></c:if><c:if test="${param.error == 'not-found' or param.error == 'invalid-id'}"><div class="alert alert-danger">Danh mục không tồn tại hoặc mã không hợp lệ.</div></c:if><div class="admin-card p-3 p-lg-4"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Danh mục</th><th>Trạng thái</th><th class="text-end">Thao tác</th></tr></thead><tbody><c:forEach items="${listcate}" var="cate"><tr><td><div class="d-flex align-items-center gap-3"><c:choose><c:when test="${cate.images != null and (cate.images.startsWith('http://') or cate.images.startsWith('https://'))}"><img class="table-thumb" src="${cate.images}" alt="${cate.categoryname}"></c:when><c:otherwise><img class="table-thumb" src="<c:url value='/image?fname=${cate.images}'/>" alt="${cate.categoryname}"></c:otherwise></c:choose><div><div class="fw-semibold">${cate.categoryname}</div><small class="text-secondary">#${cate.categoryid}</small></div></div></td><td><span class="badge rounded-pill ${cate.status == 1 ? 'text-bg-success' : 'text-bg-secondary'}">${cate.status == 1 ? 'Hoạt động' : 'Đang khóa'}</span></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="<c:url value='/admin/category/edit?id=${cate.categoryid}'/>" title="Sửa"><i class="fa-solid fa-pen"></i></a><a class="btn btn-sm btn-outline-danger" href="<c:url value='/admin/category/delete?id=${cate.categoryid}'/>" onclick="return confirm('Bạn chắc chắn muốn xóa danh mục này?')" title="Xóa"><i class="fa-solid fa-trash"></i></a></td></tr></c:forEach></tbody></table></div><c:if test="${empty listcate}"><div class="text-center py-5 text-secondary"><i class="fa-solid fa-folder-open fa-3x mb-3"></i><p>Chưa có danh mục nào.</p></div></c:if></div></main></body></html>
